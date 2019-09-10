@@ -58,28 +58,69 @@ const runners = [
 // ==== Challenge 1: Use .forEach() ====
 // The event director needs both the first and last names of each runner for their running bibs. Combine both the first and last names and populate a new array called `fullNames`. This array will contain just strings.
 let fullNames = [];
+
+runners.forEach(function (object) {
+  const name = object.first_name + " " + object.last_name;
+  fullNames.push(name)
+});
+
 console.log(fullNames);
 
 // ==== Challenge 2: Use .map() ====
 // The event director needs to have all the runners' first names in uppercase because the director BECAME DRUNK WITH POWER. Populate an array called `firstNamesAllCaps`. This array will contain just strings.
-let firstNamesAllCaps = [];
+
+const runnerNames = runners.map((element) => { 
+    return element.first_name;
+});
+
+var firstNamesAllCaps = String.prototype.toUpperCase.apply(runnerNames).split(",");
+
 console.log(firstNamesAllCaps);
 
 // ==== Challenge 3: Use .filter() ====
 // The large shirts won't be available for the event due to an ordering issue. We need a filtered version of the runners array, containing only those runners with large sized shirts so they can choose a different size. This will be an array of objects.
-let runnersLargeSizeShirt = [];
-console.log(runnersLargeSizeShirt);
+//let runnersLargeSizeShirt = [];
+//console.log(runnersLargeSizeShirt);
+
+const filteredShirts = runners.filter((large) => {
+    return large.shirt_size === "L"
+});
+
+console.log(filteredShirts);
 
 // ==== Challenge 4: Use .reduce() ====
 // The donations need to be tallied up and reported for tax purposes. Add up all the donations and save the total into a ticketPriceTotal variable.
-let ticketPriceTotal = 0;
+let ticketPriceTotal = runners.reduce((total, money) => {
+  return money.donation + total
+}, 0);
+
 console.log(ticketPriceTotal);
 
 // ==== Challenge 5: Be Creative ====
 // Now that you have used .forEach(), .map(), .filter(), and .reduce().  I want you to think of potential problems you could solve given the data set and the 5k fun run theme.  Try to create and then solve 3 unique problems using one or many of the array methods listed above.
 
-// Problem 1
+// Problem 1: The company Mycat's representative has a family emergency. So, the event director needs to gather the information from the company name alone and update all the information with the new representative.
+  const findCompanyInfo = runners.find((company) => {
+    return company.company_name === "Mycat"
+  });
 
-// Problem 2
+  console.log(findCompanyInfo);
 
-// Problem 3
+// Problem 2: The event director needs to send a mass email to all the representatives with important information! Map only the emails of all of the reps.
+  const runnerEmails = runners.map((info) => { 
+  return info.email;
+  });
+
+  console.log(runnerEmails);
+
+// Problem 3: The event director is also giving away prizes depending on the amount that the company's donated. Under 50 dollars, is a gift card. Anything over 50 dollars is a gift basket! 
+const giftCard = runners.filter((money) => {
+  return money.donation < 50
+});
+
+const giftBasket = runners.filter((money) => {
+  return money.donation >= 50
+});
+
+console.log(giftCard);
+console.log(giftBasket);
